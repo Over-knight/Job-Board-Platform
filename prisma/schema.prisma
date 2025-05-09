@@ -13,3 +13,28 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String
+  name String
+  role String // “employer” or “candidate”
+  jobs Job[] @relation("postedJobs", fields: [postedById], references: [id])
+
+}
+
+model Job {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  company String
+  location String
+  postedBy User @relation("postedJobs")
+  postedAt DateTime @default(now())
+}
+
+model Application {
+  id Int @id @default(autoincrement())
+  job
+}
