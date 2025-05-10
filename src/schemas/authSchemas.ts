@@ -4,12 +4,12 @@ export const registerSchema = z.object({
     name: z.string().min(1, "Name is required"),
     email: z.string().email("Invalid email address"),
     password: z.string().min(6, "Password must be  at least 6 characters"),
-    role: z.enum(["vendor", "staff", "admin"], {
+    role: z.enum(["candidate", "employer"], {
         required_error: "Role is required",
-        invalid_type_error: "Role must be 'admin', 'vendor', 'staff'",
+        invalid_type_error: "Role must be 'candidate', 'employer'",
     })
     .optional()
-    .default("vendor"),
+    .default("candidate"),
 });
 
 export const loginSchema = z.object({
