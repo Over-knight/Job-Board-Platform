@@ -20,7 +20,8 @@ model User {
   password String
   name String
   role String // “employer” or “candidate”
-  jobs Job[] @relation("postedJobs", fields: [postedById], references: [id])
+  jobs Job[] @relation("postedJobs")
+  apps Application[]
 
 }
 
@@ -30,11 +31,18 @@ model Job {
   description String
   company String
   location String
-  postedBy User @relation("postedJobs")
   postedAt DateTime @default(now())
+  postedBy User @relation("postedJobs", fields: [postedById], references: [id])
+  postedById Int
+  apps Application[]
 }
 
 model Application {
   id Int @id @default(autoincrement())
-  job
+  resume String
+  job Job @relation(fields: [jobId], references: [id])
+  jobId Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  appliedAt DateTime @default(now())
 }
