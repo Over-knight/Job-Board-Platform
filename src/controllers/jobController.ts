@@ -5,7 +5,7 @@ import { number } from "zod";
 
 export const createJob = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { title, description, location, salary } = createJobSchema.parse(req.body);
+        const { title, description, location, company, salary } = createJobSchema.parse(req.body);
         const userId = req.user?.id;
 
         if (!userId) {
@@ -18,8 +18,9 @@ export const createJob = async (req: Request, res: Response): Promise<void> => {
                 title,
                 description,
                 location,
+                company,
                 salary: Number(salary),
-                employerId: Number(userId),
+                postedById: Number(userId),
             },
         });
 
@@ -35,10 +36,11 @@ export const getJobs = async (req: Request, res: Response): Promise<void> => {
     res.json({ jobs });
 };
 
-export const getJobById = async (req: Request, res: Response) => {
+export const getJobById = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: "Invalid job ID" });   
+      res.status(400).json({ message: "Invalid job ID" });   
+      return;
     }
     
     const job = await prisma.job.findUnique({
@@ -46,19 +48,23 @@ export const getJobById = async (req: Request, res: Response) => {
       include: { postedBy: true },
     });
     
-  if (!job) return res.status(404).json({ message: "Job not found" });
+  if (!job) 
+    res.status(404).json({ message: "Job not found" });
+  return;
   res.json(job);
 };
 
-export const deleteJob = async (req: Request, res: Response) => {
+export const deleteJob = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: "Invalid job ID" });   
+      res.status(400).json({ message: "Invalid job ID" });   
+      return;
     }
     const job = await prisma.job.findUnique({ where: { id: Number(req.params.id) } });
   
     if (!job || number !== number) {
-      return res.status(403).json({ message: "Not authorized to delete this job" });
+      res.status(403).json({ message: "Not authorized to delete this job" });
+      return;
     }
   
     await prisma.job.delete({ where: { id } });
