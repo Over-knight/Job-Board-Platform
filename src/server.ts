@@ -5,12 +5,12 @@ import express,
 {Request, Response, NextFunction} from "express";
 
 import authRoutes from "./routes/authRoutes";
-
+import jobRoutes from "./routes/jobRoutes";
 const app = express();
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
-
+app.use("/api/jobs", jobRoutes);
 app.get("/health", (req: Request, res: Response) =>  {res.send("OK")});
 
 const PORT = process.env.PORT || 7000;

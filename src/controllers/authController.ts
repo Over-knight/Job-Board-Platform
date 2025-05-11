@@ -1,24 +1,30 @@
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import prisma from "../prisma";
 // import User from "../models/userModel";
 import { generateToken } from "../utils/generateToken";
 import { registerSchema, loginSchema } from "../schemas/authSchemas";
+
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     try{
         const { name, email, password, role } = registerSchema.parse(req.body);
         const hashedPassword = await bcrypt.hash(password, 10);
-        // 2) Create user in DB
-    // const user = await prisma.user.create({ data: { name, email, password: hashed, role } });
+        const existingUser = await prisma.user.findUnique({ where: { email}});
+        if (existingUser) {
+            res.status(400).json({ message: "Email already in use"});
+            return;
+        }
+        const user = await prisma.user.create({ data: { name, email, password: hashedPassword, role } });
     // For now, stub:
-        const user = {
-            id: 1,
-            name,
-            email,
-            password: hashedPassword,
-            role
-        };
+        // const user = {
+        //     id: 1,
+        //     name,
+        //     email,
+        //     password: hashedPassword,
+        //     role
+        // };
 
         const token = generateToken({
             id: user.id,
@@ -41,10 +47,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 export const login = async (req: Request, res: Response): Promise<any> => {
     try{
         const {email, password} = loginSchema.parse(req.body);
-        // 1) Find user
-    // const user = await prisma.user.findUnique({ where: { email } });
-    // Stub:
-        const user = { id: 1, email, password: await bcrypt.hash("pass123", 10), role: "candidate" };
+        const user = await prisma.user.findUnique({ where: { email } });
         if(!user)
             return res.status(401).json({
                 status: "fail",
@@ -67,8 +70,8 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 };
 
 export const profile = async (req: Request, res: Response) => {
-    // After auth middleware injects req.user
-    res.json({ user: req.user });
+    const user = await prisma.user.findUnique({ where: { id: Number(req.user!.id)}});
+    res.json({ user });
   };
 // export const getProfile = async (req: Request, res: Response): Promise<void> => {
 //     try{

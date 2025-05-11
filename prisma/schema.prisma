@@ -30,6 +30,7 @@ model Job {
   title String
   description String
   company String
+  salary Float
   location String
   postedAt DateTime @default(now())
   postedBy User @relation("postedJobs", fields: [postedById], references: [id])
