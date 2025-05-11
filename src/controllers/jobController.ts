@@ -38,25 +38,34 @@ export const getJobs = async (req: Request, res: Response): Promise<void> => {
 };
 
 export const getJobById = async (req: Request, res: Response): Promise<void> => {
+  // console.log("→ Entered getJobById, params.id =", req.params.id);
     const id = Number(req.params.id);
     if (Number.isNaN(id)) {
+      console.log("Bad Id format")
       res.status(400).json({ message: "Invalid job ID" });   
       return;
     }
     
+    // console.log("→ Looking up job", id);
     const job = await prisma.job.findUnique({
       where: { id },
       include: { postedBy: true },
     });
+    // console.log("→ DB returned", job);
     
-  if (!job) 
-    res.status(404).json({ message: "Job not found" });
-  return;
-  res.json(job);
+    if (!job) {
+      console.log("job not found");
+      res.status(404).json({ message: "Job not found" });
+      return;
+    };
+    console.log("sending job");
+    res.status(200).json(job);
+    return;
 };
 
 export const deleteJob = async (req: Request, res: Response): Promise<void> => {
-    const id = Number(req.params.id);
+    try{
+      const id = Number(req.params.id);
     if (Number.isNaN(id)) {
       res.status(400).json({ message: "Invalid job ID" });   
       return;
@@ -69,12 +78,17 @@ export const deleteJob = async (req: Request, res: Response): Promise<void> => {
     }
   
     await prisma.job.delete({ where: { id } });
+    console.log("deleting jobs")
     res.status(204).send();
+    return;
+    } catch (error) {
+      console.error("Error deleting job", error);
+      res.status(500).json({ message: "Error deleting job", error });
+  }
   };
 
   export const updateJob = async (req: Request, res: Response): Promise<void> => {
-    try{
-      const updates = updateJobShema.parse(req.body);
+    const updates = updateJobShema.parse(req.body);
 
       const id = Number(req.params.id);
       if (Number.isNaN(id)) {
@@ -95,12 +109,5 @@ export const deleteJob = async (req: Request, res: Response): Promise<void> => {
         where: {id},
         data: updates,
       });
-      res.json(updated);
-    } catch (err: any) {
-      if (err instanceof z.ZodError) {
-        res.status(422).json({ errors: err.errors});
-        return;
-      }
-      res.status(400).json({ message: err.message});
-    }
+      res.json(updated); 
   }
