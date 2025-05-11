@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { TokenExpiredError } from "jsonwebtoken";
 
 interface JwtPayload {
-    id: string;
+    id: number;
     role: string;
 }
 
@@ -33,7 +33,10 @@ export const protect = (req: Request, res: Response, next: NextFunction): void =
     try{
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
         // console.log("Decoded JWT:", decoded); //was used for testing
-        req.user = {id: decoded.id, role: decoded.role};
+        req.user = {
+            id: Number(decoded.id), 
+            role: decoded.role
+        };
         return next(); 
     } catch (error) {
         if (error instanceof TokenExpiredError) {

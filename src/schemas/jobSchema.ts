@@ -8,3 +8,9 @@ export const createJobSchema = z.object({
     company: z.string().min(1, "Company is required"),
     salary: z.number().positive(),
 });
+
+export const updateJobShema = createJobSchema
+.partial()
+.refine((data) => Object.keys(data).length > 0, {
+    message: "At least one field must be provided for update.",
+});
