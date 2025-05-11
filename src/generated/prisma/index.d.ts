@@ -3629,7 +3629,7 @@ export namespace Prisma {
     userId?: boolean
     appliedAt?: boolean
     job?: boolean | JobDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    candidate?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3639,7 +3639,7 @@ export namespace Prisma {
     userId?: boolean
     appliedAt?: boolean
     job?: boolean | JobDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    candidate?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3649,7 +3649,7 @@ export namespace Prisma {
     userId?: boolean
     appliedAt?: boolean
     job?: boolean | JobDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    candidate?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectScalar = {
@@ -3663,22 +3663,22 @@ export namespace Prisma {
   export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "resume" | "jobId" | "userId" | "appliedAt", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job?: boolean | JobDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    candidate?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job?: boolean | JobDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    candidate?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type ApplicationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job?: boolean | JobDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    candidate?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $ApplicationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Application"
     objects: {
       job: Prisma.$JobPayload<ExtArgs>
-      user: Prisma.$UserPayload<ExtArgs>
+      candidate: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4081,7 +4081,7 @@ export namespace Prisma {
   export interface Prisma__ApplicationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     job<T extends JobDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobDefaultArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    candidate<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4805,7 +4805,7 @@ export namespace Prisma {
     userId?: IntFilter<"Application"> | number
     appliedAt?: DateTimeFilter<"Application"> | Date | string
     job?: XOR<JobScalarRelationFilter, JobWhereInput>
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    candidate?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type ApplicationOrderByWithRelationInput = {
@@ -4815,11 +4815,12 @@ export namespace Prisma {
     userId?: SortOrder
     appliedAt?: SortOrder
     job?: JobOrderByWithRelationInput
-    user?: UserOrderByWithRelationInput
+    candidate?: UserOrderByWithRelationInput
   }
 
   export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    jobId_userId?: ApplicationJobIdUserIdCompoundUniqueInput
     AND?: ApplicationWhereInput | ApplicationWhereInput[]
     OR?: ApplicationWhereInput[]
     NOT?: ApplicationWhereInput | ApplicationWhereInput[]
@@ -4828,8 +4829,8 @@ export namespace Prisma {
     userId?: IntFilter<"Application"> | number
     appliedAt?: DateTimeFilter<"Application"> | Date | string
     job?: XOR<JobScalarRelationFilter, JobWhereInput>
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+    candidate?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "jobId_userId">
 
   export type ApplicationOrderByWithAggregationInput = {
     id?: SortOrder
@@ -4861,7 +4862,7 @@ export namespace Prisma {
     name: string
     role: string
     jobs?: JobCreateNestedManyWithoutPostedByInput
-    apps?: ApplicationCreateNestedManyWithoutUserInput
+    apps?: ApplicationCreateNestedManyWithoutCandidateInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4871,7 +4872,7 @@ export namespace Prisma {
     name: string
     role: string
     jobs?: JobUncheckedCreateNestedManyWithoutPostedByInput
-    apps?: ApplicationUncheckedCreateNestedManyWithoutUserInput
+    apps?: ApplicationUncheckedCreateNestedManyWithoutCandidateInput
   }
 
   export type UserUpdateInput = {
@@ -4880,7 +4881,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     jobs?: JobUpdateManyWithoutPostedByNestedInput
-    apps?: ApplicationUpdateManyWithoutUserNestedInput
+    apps?: ApplicationUpdateManyWithoutCandidateNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4890,7 +4891,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     jobs?: JobUncheckedUpdateManyWithoutPostedByNestedInput
-    apps?: ApplicationUncheckedUpdateManyWithoutUserNestedInput
+    apps?: ApplicationUncheckedUpdateManyWithoutCandidateNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -4997,7 +4998,7 @@ export namespace Prisma {
     resume: string
     appliedAt?: Date | string
     job: JobCreateNestedOneWithoutAppsInput
-    user: UserCreateNestedOneWithoutAppsInput
+    candidate: UserCreateNestedOneWithoutAppsInput
   }
 
   export type ApplicationUncheckedCreateInput = {
@@ -5012,7 +5013,7 @@ export namespace Prisma {
     resume?: StringFieldUpdateOperationsInput | string
     appliedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     job?: JobUpdateOneRequiredWithoutAppsNestedInput
-    user?: UserUpdateOneRequiredWithoutAppsNestedInput
+    candidate?: UserUpdateOneRequiredWithoutAppsNestedInput
   }
 
   export type ApplicationUncheckedUpdateInput = {
@@ -5263,6 +5264,11 @@ export namespace Prisma {
     isNot?: JobWhereInput
   }
 
+  export type ApplicationJobIdUserIdCompoundUniqueInput = {
+    jobId: number
+    userId: number
+  }
+
   export type ApplicationCountOrderByAggregateInput = {
     id?: SortOrder
     resume?: SortOrder
@@ -5306,10 +5312,10 @@ export namespace Prisma {
     connect?: JobWhereUniqueInput | JobWhereUniqueInput[]
   }
 
-  export type ApplicationCreateNestedManyWithoutUserInput = {
-    create?: XOR<ApplicationCreateWithoutUserInput, ApplicationUncheckedCreateWithoutUserInput> | ApplicationCreateWithoutUserInput[] | ApplicationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ApplicationCreateOrConnectWithoutUserInput | ApplicationCreateOrConnectWithoutUserInput[]
-    createMany?: ApplicationCreateManyUserInputEnvelope
+  export type ApplicationCreateNestedManyWithoutCandidateInput = {
+    create?: XOR<ApplicationCreateWithoutCandidateInput, ApplicationUncheckedCreateWithoutCandidateInput> | ApplicationCreateWithoutCandidateInput[] | ApplicationUncheckedCreateWithoutCandidateInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutCandidateInput | ApplicationCreateOrConnectWithoutCandidateInput[]
+    createMany?: ApplicationCreateManyCandidateInputEnvelope
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
   }
 
@@ -5320,10 +5326,10 @@ export namespace Prisma {
     connect?: JobWhereUniqueInput | JobWhereUniqueInput[]
   }
 
-  export type ApplicationUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<ApplicationCreateWithoutUserInput, ApplicationUncheckedCreateWithoutUserInput> | ApplicationCreateWithoutUserInput[] | ApplicationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ApplicationCreateOrConnectWithoutUserInput | ApplicationCreateOrConnectWithoutUserInput[]
-    createMany?: ApplicationCreateManyUserInputEnvelope
+  export type ApplicationUncheckedCreateNestedManyWithoutCandidateInput = {
+    create?: XOR<ApplicationCreateWithoutCandidateInput, ApplicationUncheckedCreateWithoutCandidateInput> | ApplicationCreateWithoutCandidateInput[] | ApplicationUncheckedCreateWithoutCandidateInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutCandidateInput | ApplicationCreateOrConnectWithoutCandidateInput[]
+    createMany?: ApplicationCreateManyCandidateInputEnvelope
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
   }
 
@@ -5345,17 +5351,17 @@ export namespace Prisma {
     deleteMany?: JobScalarWhereInput | JobScalarWhereInput[]
   }
 
-  export type ApplicationUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ApplicationCreateWithoutUserInput, ApplicationUncheckedCreateWithoutUserInput> | ApplicationCreateWithoutUserInput[] | ApplicationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ApplicationCreateOrConnectWithoutUserInput | ApplicationCreateOrConnectWithoutUserInput[]
-    upsert?: ApplicationUpsertWithWhereUniqueWithoutUserInput | ApplicationUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ApplicationCreateManyUserInputEnvelope
+  export type ApplicationUpdateManyWithoutCandidateNestedInput = {
+    create?: XOR<ApplicationCreateWithoutCandidateInput, ApplicationUncheckedCreateWithoutCandidateInput> | ApplicationCreateWithoutCandidateInput[] | ApplicationUncheckedCreateWithoutCandidateInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutCandidateInput | ApplicationCreateOrConnectWithoutCandidateInput[]
+    upsert?: ApplicationUpsertWithWhereUniqueWithoutCandidateInput | ApplicationUpsertWithWhereUniqueWithoutCandidateInput[]
+    createMany?: ApplicationCreateManyCandidateInputEnvelope
     set?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
     disconnect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
     delete?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-    update?: ApplicationUpdateWithWhereUniqueWithoutUserInput | ApplicationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ApplicationUpdateManyWithWhereWithoutUserInput | ApplicationUpdateManyWithWhereWithoutUserInput[]
+    update?: ApplicationUpdateWithWhereUniqueWithoutCandidateInput | ApplicationUpdateWithWhereUniqueWithoutCandidateInput[]
+    updateMany?: ApplicationUpdateManyWithWhereWithoutCandidateInput | ApplicationUpdateManyWithWhereWithoutCandidateInput[]
     deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
   }
 
@@ -5381,17 +5387,17 @@ export namespace Prisma {
     deleteMany?: JobScalarWhereInput | JobScalarWhereInput[]
   }
 
-  export type ApplicationUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ApplicationCreateWithoutUserInput, ApplicationUncheckedCreateWithoutUserInput> | ApplicationCreateWithoutUserInput[] | ApplicationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ApplicationCreateOrConnectWithoutUserInput | ApplicationCreateOrConnectWithoutUserInput[]
-    upsert?: ApplicationUpsertWithWhereUniqueWithoutUserInput | ApplicationUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ApplicationCreateManyUserInputEnvelope
+  export type ApplicationUncheckedUpdateManyWithoutCandidateNestedInput = {
+    create?: XOR<ApplicationCreateWithoutCandidateInput, ApplicationUncheckedCreateWithoutCandidateInput> | ApplicationCreateWithoutCandidateInput[] | ApplicationUncheckedCreateWithoutCandidateInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutCandidateInput | ApplicationCreateOrConnectWithoutCandidateInput[]
+    upsert?: ApplicationUpsertWithWhereUniqueWithoutCandidateInput | ApplicationUpsertWithWhereUniqueWithoutCandidateInput[]
+    createMany?: ApplicationCreateManyCandidateInputEnvelope
     set?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
     disconnect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
     delete?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-    update?: ApplicationUpdateWithWhereUniqueWithoutUserInput | ApplicationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ApplicationUpdateManyWithWhereWithoutUserInput | ApplicationUpdateManyWithWhereWithoutUserInput[]
+    update?: ApplicationUpdateWithWhereUniqueWithoutCandidateInput | ApplicationUpdateWithWhereUniqueWithoutCandidateInput[]
+    updateMany?: ApplicationUpdateManyWithWhereWithoutCandidateInput | ApplicationUpdateManyWithWhereWithoutCandidateInput[]
     deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
   }
 
@@ -5632,26 +5638,26 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ApplicationCreateWithoutUserInput = {
+  export type ApplicationCreateWithoutCandidateInput = {
     resume: string
     appliedAt?: Date | string
     job: JobCreateNestedOneWithoutAppsInput
   }
 
-  export type ApplicationUncheckedCreateWithoutUserInput = {
+  export type ApplicationUncheckedCreateWithoutCandidateInput = {
     id?: number
     resume: string
     jobId: number
     appliedAt?: Date | string
   }
 
-  export type ApplicationCreateOrConnectWithoutUserInput = {
+  export type ApplicationCreateOrConnectWithoutCandidateInput = {
     where: ApplicationWhereUniqueInput
-    create: XOR<ApplicationCreateWithoutUserInput, ApplicationUncheckedCreateWithoutUserInput>
+    create: XOR<ApplicationCreateWithoutCandidateInput, ApplicationUncheckedCreateWithoutCandidateInput>
   }
 
-  export type ApplicationCreateManyUserInputEnvelope = {
-    data: ApplicationCreateManyUserInput | ApplicationCreateManyUserInput[]
+  export type ApplicationCreateManyCandidateInputEnvelope = {
+    data: ApplicationCreateManyCandidateInput | ApplicationCreateManyCandidateInput[]
     skipDuplicates?: boolean
   }
 
@@ -5685,20 +5691,20 @@ export namespace Prisma {
     postedById?: IntFilter<"Job"> | number
   }
 
-  export type ApplicationUpsertWithWhereUniqueWithoutUserInput = {
+  export type ApplicationUpsertWithWhereUniqueWithoutCandidateInput = {
     where: ApplicationWhereUniqueInput
-    update: XOR<ApplicationUpdateWithoutUserInput, ApplicationUncheckedUpdateWithoutUserInput>
-    create: XOR<ApplicationCreateWithoutUserInput, ApplicationUncheckedCreateWithoutUserInput>
+    update: XOR<ApplicationUpdateWithoutCandidateInput, ApplicationUncheckedUpdateWithoutCandidateInput>
+    create: XOR<ApplicationCreateWithoutCandidateInput, ApplicationUncheckedCreateWithoutCandidateInput>
   }
 
-  export type ApplicationUpdateWithWhereUniqueWithoutUserInput = {
+  export type ApplicationUpdateWithWhereUniqueWithoutCandidateInput = {
     where: ApplicationWhereUniqueInput
-    data: XOR<ApplicationUpdateWithoutUserInput, ApplicationUncheckedUpdateWithoutUserInput>
+    data: XOR<ApplicationUpdateWithoutCandidateInput, ApplicationUncheckedUpdateWithoutCandidateInput>
   }
 
-  export type ApplicationUpdateManyWithWhereWithoutUserInput = {
+  export type ApplicationUpdateManyWithWhereWithoutCandidateInput = {
     where: ApplicationScalarWhereInput
-    data: XOR<ApplicationUpdateManyMutationInput, ApplicationUncheckedUpdateManyWithoutUserInput>
+    data: XOR<ApplicationUpdateManyMutationInput, ApplicationUncheckedUpdateManyWithoutCandidateInput>
   }
 
   export type ApplicationScalarWhereInput = {
@@ -5717,7 +5723,7 @@ export namespace Prisma {
     password: string
     name: string
     role: string
-    apps?: ApplicationCreateNestedManyWithoutUserInput
+    apps?: ApplicationCreateNestedManyWithoutCandidateInput
   }
 
   export type UserUncheckedCreateWithoutJobsInput = {
@@ -5726,7 +5732,7 @@ export namespace Prisma {
     password: string
     name: string
     role: string
-    apps?: ApplicationUncheckedCreateNestedManyWithoutUserInput
+    apps?: ApplicationUncheckedCreateNestedManyWithoutCandidateInput
   }
 
   export type UserCreateOrConnectWithoutJobsInput = {
@@ -5737,7 +5743,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutJobInput = {
     resume: string
     appliedAt?: Date | string
-    user: UserCreateNestedOneWithoutAppsInput
+    candidate: UserCreateNestedOneWithoutAppsInput
   }
 
   export type ApplicationUncheckedCreateWithoutJobInput = {
@@ -5773,7 +5779,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    apps?: ApplicationUpdateManyWithoutUserNestedInput
+    apps?: ApplicationUpdateManyWithoutCandidateNestedInput
   }
 
   export type UserUncheckedUpdateWithoutJobsInput = {
@@ -5782,7 +5788,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    apps?: ApplicationUncheckedUpdateManyWithoutUserNestedInput
+    apps?: ApplicationUncheckedUpdateManyWithoutCandidateNestedInput
   }
 
   export type ApplicationUpsertWithWhereUniqueWithoutJobInput = {
@@ -5919,7 +5925,7 @@ export namespace Prisma {
     postedAt?: Date | string
   }
 
-  export type ApplicationCreateManyUserInput = {
+  export type ApplicationCreateManyCandidateInput = {
     id?: number
     resume: string
     jobId: number
@@ -5957,20 +5963,20 @@ export namespace Prisma {
     postedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ApplicationUpdateWithoutUserInput = {
+  export type ApplicationUpdateWithoutCandidateInput = {
     resume?: StringFieldUpdateOperationsInput | string
     appliedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     job?: JobUpdateOneRequiredWithoutAppsNestedInput
   }
 
-  export type ApplicationUncheckedUpdateWithoutUserInput = {
+  export type ApplicationUncheckedUpdateWithoutCandidateInput = {
     id?: IntFieldUpdateOperationsInput | number
     resume?: StringFieldUpdateOperationsInput | string
     jobId?: IntFieldUpdateOperationsInput | number
     appliedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ApplicationUncheckedUpdateManyWithoutUserInput = {
+  export type ApplicationUncheckedUpdateManyWithoutCandidateInput = {
     id?: IntFieldUpdateOperationsInput | number
     resume?: StringFieldUpdateOperationsInput | string
     jobId?: IntFieldUpdateOperationsInput | number
@@ -5987,7 +5993,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutJobInput = {
     resume?: StringFieldUpdateOperationsInput | string
     appliedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutAppsNestedInput
+    candidate?: UserUpdateOneRequiredWithoutAppsNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutJobInput = {

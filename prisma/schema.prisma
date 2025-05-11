@@ -43,7 +43,9 @@ model Application {
   resume String
   job Job @relation(fields: [jobId], references: [id])
   jobId Int
-  user User @relation(fields: [userId], references: [id])
+  candidate User @relation(fields: [userId], references: [id])
   userId Int
   appliedAt DateTime @default(now())
+
+  @@unique([jobId, userId])
 }
