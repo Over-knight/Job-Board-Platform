@@ -17,7 +17,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             return;
         }
         const user = await prisma.user.create({ data: { name, email, password: hashedPassword, role } });
-    // For now, stub:
         // const user = {
         //     id: 1,
         //     name,
