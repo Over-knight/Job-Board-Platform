@@ -14,10 +14,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@google/genai": "^0.13.0",
+    "@google/generative-ai": "^0.24.1",
     "@prisma/client": "^6.7.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
     "express": "^5.1.0",
+    "genai": "^0.0.18",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.2",
     "pg": "^8.15.6",

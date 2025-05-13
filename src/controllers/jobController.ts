@@ -111,3 +111,31 @@ export const deleteJob = async (req: Request, res: Response): Promise<void> => {
       });
       res.json(updated); 
   }
+
+  export const searchJobs = async(req: Request, res: Response): Promise<void> => {
+    const { q, location, minSalary, maxSalary} = req.query as {
+      q?: string;
+      location: string;
+      minSalary: string;
+      maxSalary: string;
+    };
+
+    const where: any = {};
+    if (q) {
+      where.OR = [
+        {title: {contains: q, mode: 'insensitive'}},
+        {description: {contains: q, mode: 'insensitive'}},
+        {company: {contains: q, mode: 'insensitive'}}
+      ];
+    }
+    if (location) where.location = {equals: location};
+    if (minSalary) where.salary = { ...(where.salary ?? {}), gte: Number(minSalary)};
+    if (maxSalary) where.salary = { ...(where.salary ?? {}), ite: Number(maxSalary)};
+
+    const jobs = await prisma.job.findMany({
+      where,
+      orderBy: { postedAt: 'desc'},
+      include: { postedBy: true}
+    });
+    res.json(jobs);
+  };
