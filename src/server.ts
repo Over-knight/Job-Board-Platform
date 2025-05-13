@@ -6,11 +6,13 @@ import express,
 
 import authRoutes from "./routes/authRoutes";
 import jobRoutes from "./routes/jobRoutes";
+import applicationRoutes from "./routes/applicationRoutes";
 const app = express();
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
+app.use("/api/applications", applicationRoutes);
 app.get("/health", (req: Request, res: Response) =>  {res.send("OK")});
 
 app.use((req, res) => {
