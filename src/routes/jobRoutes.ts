@@ -2,6 +2,7 @@ import { Router } from "express";
 import { protect } from "../middleware/authMiddleware";
 import { createJob, 
     getJobs, 
+    listJobs,
     getJobById, 
     deleteJob, 
     updateJob,
@@ -13,6 +14,7 @@ import { isCandidate,
 const router = Router();
 
 router.get("/", getJobs);
+router.get("/", listJobs);
 router.get("/:id", getJobById);
 router.get("/search", searchJobs);
 router.post("/", protect, isEmployer, createJob);
