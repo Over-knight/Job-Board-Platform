@@ -31,3 +31,17 @@ export const validateBody = (Schema: AnyZodObject) =>
             next();
         };
     
+        export const validateParams = (Schema: AnyZodObject) => 
+            (req: Request, res: Response, next: NextFunction) => {
+                const result = Schema.safeParse(req.params);
+                if (!result.success) {
+                    const errors = result.error.errors.map(e => ({
+                        field: e.path.join(','),
+                        message: e.message
+                    }));
+                    res.status(400).json({ errors});
+                    return;
+                }
+                req.body = result.data;
+                next();
+            };

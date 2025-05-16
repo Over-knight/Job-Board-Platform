@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import prisma from "../prisma";
 import { createJobSchema, updateJobShema } from "../schemas/jobSchema";
 import { number } from "zod";
+import { parsePagination, parseSort } from "../utils/pagination";
 import z from "zod";
 
 export const createJob = async (req: Request, res: Response): Promise<void> => {
@@ -139,3 +140,31 @@ export const deleteJob = async (req: Request, res: Response): Promise<void> => {
     });
     res.json(jobs);
   };
+
+
+export const listJobs = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { page, limit, skip } = parsePagination(req);
+    const { field, order } = parseSort(req);
+
+    // count total jobs
+    const total = await prisma.job.count();
+
+    // fetch paginated jobs
+    const jobs = await prisma.job.findMany({
+      skip,
+      take: limit,
+      orderBy: { [field]: order },
+      include: { postedBy: true },
+    });
+
+    res.json({
+      meta: { total, page, limit, pages: Math.ceil(total / limit) },
+      data: jobs,
+    });
+  } catch (err) {
+    console.error('Error listing jobs:', err);
+    res.status(500).json({ message: 'Error listing jobs' });
+  }
+};
+
