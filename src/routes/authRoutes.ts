@@ -1,12 +1,17 @@
 import express from "express";
 import { register,
     login, 
-    profile
+    profile,
+    getProfile,
+    updateProfile,
+    deleteProfile,
+    logout
  } from "../controllers/authController";
  import { protect } from "../middleware/authMiddleware";
  import { validateBody } from "../middleware/validate";
 import { registerSchema,
-    loginSchema
+    loginSchema,
+    updateProfileSchema
  } from "../schemas/authSchemas";
  const router = express.Router();
 
