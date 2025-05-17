@@ -3,6 +3,9 @@ dotenv.config();
 
 import express,
 {Request, Response, NextFunction} from "express";
+import helmet from "helmet";
+import cors from "cors";
+import mongoose from "mongoose";
 
 import authRoutes from "./routes/authRoutes";
 import jobRoutes from "./routes/jobRoutes";
@@ -10,6 +13,10 @@ import applicationRoutes from "./routes/applicationRoutes";
 import recommendationRoutes from "./routes/recommendationRoutes";
 const app = express();
 app.use(express.json());
+app.use(helmet());
+app.use(cors({ origin: process.env.CORS_ORIGIN || "*"}));
+app.use(express.json({ limit: "10kb"}));
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
